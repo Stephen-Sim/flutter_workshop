@@ -42,7 +42,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: AppBar(
-        title: Text("BMI Calculator", style: TextStyle(color: Colors.white),),
+        title: Text(
+          "BMI Calculator",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
       ),
       body: Padding(
@@ -88,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 height: 10,
               ),
               Text(
-                "Weight: ${_wetightSliderValue.toStringAsFixed(2)}kg" + (_wetightSliderValue > 100 ? " 😲😲😲" : ""),
+                "Weight: ${_wetightSliderValue.toStringAsFixed(2)}kg ${_wetightSliderValue > 100 ? " 😲😲😲" : ""}",
                 style: TextStyle(fontSize: 20),
               ),
               Slider(
@@ -110,12 +113,14 @@ class _HomePageState extends State<HomePage> {
                   _bmi = _wetightSliderValue / pow(_heightSliderValue / 100, 2);
                   String msg = "Your BMI: ${_bmi.toStringAsFixed(1)}. ";
 
-                  if (_bmi < 18.5) {
+                  if (_bmi < 18) {
                     msg += "Your are underweight";
-                  } else if (_bmi > 25) {
+                  } else if (_bmi > 18 && _bmi <= 25) {
+                    msg += "Your are normal";
+                  } else if (_bmi > 25 && _bmi <= 30) {
                     msg += "Your are overweight";
                   } else {
-                    msg += "Your are normal";
+                    msg += "You are obese.";
                   }
 
                   Fluttertoast.showToast(
@@ -123,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
+                      backgroundColor: _bmi < 15 || _bmi > 25 ? Colors.red : Colors.green,
                       textColor: Colors.white,
                       fontSize: 16.0);
                 },
