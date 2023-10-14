@@ -78,6 +78,7 @@ class _HomePageState extends State<HomePage> {
                 min: 130,
                 label: _heightSliderValue.round().toString(),
                 onChanged: (double value) {
+                  // setState func is used to refresh the UI
                   setState(() {
                     _heightSliderValue = value;
                   });
