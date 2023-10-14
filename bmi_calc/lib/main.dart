@@ -35,6 +35,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _heightSliderValue = 130;
   double _wetightSliderValue = 40;
+  double _bmi = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +106,12 @@ class _HomePageState extends State<HomePage> {
               ),
               TextButton.icon(
                 onPressed: () {
-                  double bmi = _wetightSliderValue / pow(_heightSliderValue / 100, 2);
-                  String msg = "Your BMI: ${bmi.toStringAsFixed(1)}. ";
+                  _bmi = _wetightSliderValue / pow(_heightSliderValue / 100, 2);
+                  String msg = "Your BMI: ${_bmi.toStringAsFixed(1)}. ";
 
-                  if (bmi < 18.5) {
+                  if (_bmi < 18.5) {
                     msg += "Your are underweight";
-                  } else if (bmi > 25) {
+                  } else if (_bmi > 25) {
                     msg += "Your are overweight";
                   } else {
                     msg += "Your are normal";
