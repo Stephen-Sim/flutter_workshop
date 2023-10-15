@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_dos/widgets/add.dart';
 import 'package:to_dos/widgets/detail.dart';
 
@@ -12,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _todos = [
+  List<dynamic> _todos = [
     {
       "name": "Multiple page",
       "desc": "How to structure multiple page",
@@ -41,6 +44,29 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    loadData();
+  }
+
+  void loadData() async
+    {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var todosString = prefs.getString("todos");
+
+      if (todosString != null)
+      {
+        var todos = jsonDecode(todosString);
+        setState(() {
+          _todos = todos;
+        });
+      }
+    }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.yellow,
@@ -62,6 +88,15 @@ class _HomePageState extends State<HomePage> {
                   // 3. process the receive item
                   if (passedItem != null) {
                     _todos.add(passedItem);
+
+                    // Obtain shared preferences.
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                    // Save as String, int, bool, double
+                    // transform to String
+                    // We use json encode to transform List of Map of String
+                    prefs.setString("todos", jsonEncode(_todos));
+
                     setState(() {
                       _todos;
                     });

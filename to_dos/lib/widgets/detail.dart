@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
   // 1) In receiver, create a variable to store the received item
-  Map<String,String> item;
+  dynamic item;
 
   // 2) Create constructor to receive the item
   DetailPage({required this.item});
@@ -21,6 +21,7 @@ class DetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Name: ${item["name"]}", style: TextStyle(fontSize: 20),),
             Text("Detail: ${item["desc"]}", style: TextStyle(fontSize: 20),),
